@@ -10,7 +10,10 @@ export default async function handler(req, res) {
   // Get the secret API key from Vercel's environment variables.
   const API_KEY = process.env.GEMINI_API_KEY;
 
+  // This is a crucial check. If the key is missing, the function will fail.
   if (!API_KEY) {
+    // Return a clear error message to the Vercel logs.
+    console.error("GEMINI_API_KEY is not configured in Vercel project settings.");
     return res.status(500).json({ error: 'API key is not configured.' });
   }
 
@@ -64,7 +67,9 @@ export default async function handler(req, res) {
     });
 
     if (!geminiResponse.ok) {
-      throw new Error(`Gemini API Error: ${geminiResponse.statusText}`);
+        const errorBody = await geminiResponse.text();
+        console.error("Gemini API Error:", errorBody);
+        throw new Error(`Gemini API Error: ${geminiResponse.statusText}`);
     }
 
     const data = await geminiResponse.json();
@@ -87,7 +92,8 @@ export default async function handler(req, res) {
     }
 
   } catch (error) {
-    console.error('Function error:', error);
+    console.error('Function execution error:', error);
     return res.status(500).json({ error: 'An error occurred while processing the AI request.' });
   }
 }
+
