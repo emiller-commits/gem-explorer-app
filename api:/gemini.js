@@ -1,69 +1,93 @@
-// Vercel Serverless Function to securely call the Gemini API
-// This file should be placed in the `/api` directory of your project.
+// This file acts as a secure backend on Vercel's servers.
 
-export default async function handler(request, response) {
-  // Only allow POST requests
-  if (request.method !== 'POST') {
-    return response.status(405).json({ message: 'Method Not Allowed' });
+// All API requests from the frontend will come to this function.
+export default async function handler(req, res) {
+  // Ensure this is a POST request.
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const geminiApiKey = process.env.GEMINI_API_KEY;
-  if (!geminiApiKey) {
-    return response.status(500).json({ error: 'GEMINI_API_KEY is not configured on the server.' });
+  // Get the secret API key from Vercel's environment variables.
+  const API_KEY = process.env.GEMINI_API_KEY;
+
+  if (!API_KEY) {
+    return res.status(500).json({ error: 'API key is not configured.' });
   }
+
+  const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-preview-0527:generateContent?key=" + API_KEY;
 
   try {
-    const { action, payload } = request.body;
+    const { type, payload } = req.body;
     let requestBody;
-    const geminiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-preview-0527:generateContent?key=${geminiApiKey}`;
 
-    // Determine the correct request body based on the action from the client
-    switch (action) {
+    // Build the correct request body based on the 'type' from the frontend
+    switch (type) {
       case 'filter':
         requestBody = {
           contents: [
-            payload.systemInstruction,
+            { role: "system", parts: [{ text: "Analyze the user's query to identify relevant product categories and keywords for filtering a product catalog. The possible categories are 'Design Analysis', 'Research & Strategy', and 'Design Generation'. RESPOND ONLY WITH a valid JSON object matching the provided schema. Do not include any other text, explanations, or markdown formatting." }] },
             ...payload.chatHistory,
-            { role: 'user', parts: [{ text: payload.userMessage }] }
           ],
           generationConfig: {
             response_mime_type: "application/json",
-            response_schema: payload.responseSchema,
+            response_schema: { type: "OBJECT", properties: { category: { type: "STRING" }, keywords: { type: "ARRAY", items: { type: "STRING" } } } },
           }
         };
         break;
-      
+
       case 'summarize':
-      case 'suggest':
         requestBody = {
-          contents: [{ parts: [{ text: payload.prompt }] }]
+          contents: [{ parts: [{ text: `In a single, concise sentence, summarize what this product does: Name: ${payload.product.name}, Description: ${payload.product.description}, Specs: ${payload.product.specs}` }] }]
+        };
+        break;
+
+      case 'suggest':
+        const productList = JSON.stringify(payload.products.map(p => ({id: p.id, name: p.name, description: p.description})));
+        requestBody = {
+            contents: [{ parts: [{ text: `A user needs help with the following task: "${payload.userInput}". Review this list of available tools: ${productList}. Which one is the absolute best fit for the user's task? Respond with only a valid JSON object containing the ID of the single best product. Example: { "recommendedId": 3 }` }] }],
+            generationConfig: {
+                response_mime_type: "application/json",
+                response_schema: { type: "OBJECT", properties: { recommendedId: { type: "NUMBER" } } }
+            }
         };
         break;
 
       default:
-        return response.status(400).json({ error: 'Invalid action specified.' });
+        return res.status(400).json({ error: 'Invalid request type' });
     }
 
     // Call the Gemini API
-    const apiResponse = await fetch(geminiApiUrl, {
+    const geminiResponse = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(requestBody),
     });
 
-    if (!apiResponse.ok) {
-      const errorText = await apiResponse.text();
-      console.error('Gemini API Error:', errorText);
-      throw new Error(`Gemini API request failed with status ${apiResponse.status}`);
+    if (!geminiResponse.ok) {
+      throw new Error(`Gemini API Error: ${geminiResponse.statusText}`);
     }
 
-    const data = await apiResponse.json();
-    
-    // Send the successful response back to the client
-    response.status(200).json(data);
+    const data = await geminiResponse.json();
+    const aiText = data.candidates[0].content.parts[0].text;
+
+    // Send the processed response back to the frontend
+    if (type === 'filter') {
+        const aiResponseObject = JSON.parse(aiText);
+        const modelChatMessage = `Sure! I'm filtering for products in the '${aiResponseObject.category}' category or related to these keywords: ${aiResponseObject.keywords.join(', ')}. Here are the results.`;
+        return res.status(200).json({ aiResponseObject, modelChatMessage });
+    }
+    if (type === 'summarize') {
+        return res.status(200).json({ summary: aiText });
+    }
+    if (type === 'suggest') {
+        const { recommendedId } = JSON.parse(aiText);
+        const allProducts = payload.products;
+        const recommendedProduct = allProducts.find(p => p.id === recommendedId);
+        return res.status(200).json({ recommendedProduct });
+    }
 
   } catch (error) {
-    console.error('Error in Vercel function:', error);
-    response.status(500).json({ error: 'An internal server error occurred.', details: error.message });
+    console.error('Function error:', error);
+    return res.status(500).json({ error: 'An error occurred while processing the AI request.' });
   }
 }
