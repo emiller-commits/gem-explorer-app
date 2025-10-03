@@ -1,342 +1,360 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000; min-height: 14.0px}
-    span.s1 {font-kerning: none}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gem Explorer: AI-Powered Product Catalog</title>
+  
+  <!-- Tailwind CSS for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- React libraries for component-based UI -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  
+  <!-- Babel to translate JSX in the browser -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    /* A simple scrollbar style to make the chat history look cleaner */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9; /* slate-100 */
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #94a3b8; /* slate-400 */
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #475569; /* slate-600 */
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+    }
+    .animate-fade-in {
+        animation: fadeIn 0.2s ease-out forwards;
+    }
   </style>
 </head>
-<body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;head&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;Gem Explorer: AI-Powered Product Catalog&lt;/title&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Tailwind CSS for styling --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- React Libraries for component-based UI --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/react@18/umd/react.development.js"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Babel for JSX transpilation in the browser --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/@babel/standalone/babel.min.js"&gt;&lt;/script&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;style&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>/* A simple scrollbar style to make the chat history look cleaner */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.custom-scrollbar::-webkit-scrollbar {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>width: 6px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.custom-scrollbar::-webkit-scrollbar-track {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background: #f1f5f9; /* slate-100 */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.custom-scrollbar::-webkit-scrollbar-thumb {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background: #94a3b8; /* slate-400 */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 3px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.custom-scrollbar::-webkit-scrollbar-thumb:hover {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background: #64748b; /* slate-500 */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>@keyframes fadeIn {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>from { opacity: 0; transform: scale(0.95); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>to { opacity: 1; transform: scale(1); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.animate-fade-in {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>animation: fadeIn 0.2s ease-out forwards;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;body class="bg-slate-100"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="root"&gt;&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script type="text/babel"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// --- DATA STRUCTURE (As specified in the prompt) ---</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const PRODUCTS = [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>{ id: 1, name: 'Evaluation and Improvement Bot', category: 'Design Analysis', description: 'Converts prototypes into improvement plans with Figma Make prompts', brand: 'Gemini', specs: 'This interactive assistant streamlines your design review by converting prototype videos or screenshots into a direct improvement plan with clear descriptions, severity ratings, and Figma Make prompts', url: 'https://gemini.google.com/gem/1jYmfsrkjVz9XpjUsQazOBGvm6p-DpT79?usp=sharing' },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>{ id: 2, name: 'Heuristic Analysis Bot', category: 'Design Analysis', description: 'Generates a comprehensive heuristic evaluation', brand: 'Gemini', specs: 'This bot generates a comprehensive heuristic evaluation by transforming a prototype video into a rigorous, actionable usability audit based on Nielsen\'s principles', url: 'https://gemini.google.com/gem/1lgF3FT1pcVeRjrb_H9TDq6uLgGVUa3T2?usp=sharing' },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>{ id: 3, name: 'Insight Collection Space', category: 'Research &amp; Strategy', description: 'Organizes and analyzes research, creating categories and reports', brand: 'Gemini', specs: 'This chatbot helps you organize and analyze your research by guiding you through predefined steps to identify categories, create collections, and generate research findings reports', url: 'https://gemini.google.com/gem/1JQ0ltBsP13oe__uBJJfOVm9V3wWZD4Ni?usp=sharing' },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>{ id: 4, name: 'Research Assistant', category: 'Research &amp; Strategy', description: 'Streamlines research workflow and provides recommendations or deliverables', brand: 'Gemini', specs: 'This chatbot streamlines your research workflow by assisting with 14 essential research activities and providing intelligent recommendations or a professional-grade deliverable', url: 'https://gemini.google.com/gem/1Ldq4Y6oM_UN51cKCRGWKzIPvhnTPsDMu?usp=sharing' },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>{ id: 5, name: 'The Dynamic Q&amp;A Bot', category: 'Design Generation', description: 'Gathers specific information using concise, dynamic questions', brand: 'Gemini', specs: 'This chatbot uses a fixed set of concise, dynamically determined, short or multiple-choice questions to gather specific information while minimizing user effort', url: 'https://gemini.google.com/gem/1rL-C7pQklAHdDw_O8F8bz1Wvc7FGQ3OF?usp=sharing' },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>{ id: 6, name: 'The Wireframe Writer', category: 'Design Generation', description: 'Transforms project briefs into detailed, Figma-ready wireframes', brand: 'Gemini', specs: 'This specialized assistant guides you through a structured and collaborative design process to transform your project brief into a detailed, Figma-ready wireframe', url: 'https://gemini.google.com/gem/1nPo8mI8T1tZfTlCl9W0VV4hxPchebYDT?usp=sharing' }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>];</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// --- MAIN APPLICATION COMPONENT ---</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>function App() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const { useState, useEffect, useRef } = React;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const [filteredProducts, setFilteredProducts] = useState(PRODUCTS);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const [activeCategory, setActiveCategory] = useState('All');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const [isModalOpen, setIsModalOpen] = useState(false);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const [selectedProduct, setSelectedProduct] = useState(null);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const [chatHistory, setChatHistory] = useState([</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>{ role: 'model', parts: [{ text: "Hi! How can I help you find the perfect Gem today? Try asking for 'bots that help with usability audits' or 'something for creating wireframes'." }] }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>]);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const [userInput, setUserInput] = useState('');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const [isLoading, setIsLoading] = useState(false);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">          </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>// States for new Gemini features</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const [isSummarizing, setIsSummarizing] = useState(false);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const [gemSummary, setGemSummary] = useState('');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const [isSuggestionModalOpen, setSuggestionModalOpen] = useState(false);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const [suggestionQuery, setSuggestionQuery] = useState('');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const [isSuggesting, setIsSuggesting] = useState(false);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const chatEndRef = useRef(null);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>useEffect(() =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>}, [chatHistory]);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>// This URL points to our Netlify Function</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const API_URL = `/.netlify/functions/gemini`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const categories = ['All', ...new Set(PRODUCTS.map(p =&gt; p.category))];</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const handleCategoryFilter = (category) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>setActiveCategory(category);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>setFilteredProducts(category === 'All' ? PRODUCTS : PRODUCTS.filter(p =&gt; p.category === category));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const openModal = (product) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>setSelectedProduct(product);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>setGemSummary('');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>setIsModalOpen(true);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const closeModal = () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>setIsModalOpen(false);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>setSelectedProduct(null);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>};</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">          </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const handleAISearch = async (e) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>e.preventDefault();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>if (!userInput.trim() || isLoading) return;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>setIsLoading(true);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const userMessage = userInput;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>setChatHistory(prev =&gt; [...prev, { role: 'user', parts: [{ text: userMessage }] }]);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>setUserInput('');</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const requestBody = { prompt: userMessage, action: 'filter' };</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>try {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const response = await fetch(API_URL, {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>method: 'POST',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>headers: { 'Content-Type': 'application/json' },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>body: JSON.stringify(requestBody),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (!response.ok) throw new Error(`Function Error: ${response.statusText}`);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const aiResponseObject = await response.json();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const { category, keywords } = aiResponseObject;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const modelChatMessage = `Sure! I'm filtering for products in the '${category || 'any'}' category or related to these keywords: ${keywords.join(', ')}. Here are the results.`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>setChatHistory(prev =&gt; [...prev, { role: 'model', parts: [{ text: modelChatMessage }] }]);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const lowercasedKeywords = keywords ? keywords.map(k =&gt; k.toLowerCase()) : [];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const results = PRODUCTS.filter(product =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>const categoryMatch = category &amp;&amp; product.category.toLowerCase() === category.toLowerCase();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>const textToSearch = `${product.name} ${product.description} ${product.brand} ${product.specs}`.toLowerCase();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>const keywordMatch = lowercasedKeywords.length &gt; 0 &amp;&amp; lowercasedKeywords.some(keyword =&gt; textToSearch.includes(keyword));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>return categoryMatch || keywordMatch;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>setFilteredProducts(results);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>setActiveCategory(null);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>} catch (error) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>console.error("AI search failed:", error);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>setChatHistory(prev =&gt; [...prev, { role: 'model', parts: [{ text: "I'm sorry, I'm having trouble connecting. Please try again in a moment." }] }]);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>} finally {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>setIsLoading(false);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const handleSummarizeGem = async () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>if (!selectedProduct || isSummarizing) return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>setIsSummarizing(true);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>setGemSummary('');</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>const requestBody = { action: 'summarize', product: selectedProduct };</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>try {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>const response = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(requestBody) });</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>if (!response.ok) throw new Error(`Function Error: ${response.statusText}`);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>const data = await response.json();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>setGemSummary(data.summary);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>} catch (error) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>console.error("Gemini summary failed:", error);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>setGemSummary("Sorry, I couldn't generate a summary at this time.");</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>} finally {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>setIsSummarizing(false);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const handleSuggestGem = async (e) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>e.preventDefault();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>if (!suggestionQuery.trim() || isSuggesting) return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>setIsSuggesting(true);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>const requestBody = { action: 'suggest', prompt: suggestionQuery };</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">              </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>try {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>const response = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(requestBody) });</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>if (!response.ok) throw new Error(`Function Error: ${response.statusText}`);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>const { productId } = await response.json();</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>const recommendedProduct = PRODUCTS.find(p =&gt; p.id === productId);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>if (recommendedProduct) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>setSuggestionModalOpen(false);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>setSuggestionQuery('');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>setTimeout(() =&gt; openModal(recommendedProduct), 200);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>} catch (error) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>console.error("Gemini suggestion failed:", error);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>alert("Sorry, I couldn't find a suggestion. Please try rephrasing your problem.");</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>} finally {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>setIsSuggesting(false);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const ProductCard = ({ product }) =&gt; (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div onClick={() =&gt; openModal(product)} className="bg-white rounded-lg p-4 flex flex-col justify-between cursor-pointer shadow-sm hover:shadow-md transition-shadow duration-300 h-[200px]"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span className="text-xs font-semibold text-emerald-700 uppercase"&gt;{product.category}&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h3 className="text-lg font-bold text-slate-800 mt-1"&gt;{product.name}&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;p className="text-slate-600 text-sm leading-snug"&gt;{product.description}&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const QuickViewModal = () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>if (!isModalOpen || !selectedProduct) return null;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>return (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50" onClick={closeModal}&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div className="bg-white rounded-lg shadow-2xl p-6 w-full max-w-2xl relative animate-fade-in" onClick={(e) =&gt; e.stopPropagation()}&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;button onClick={closeModal} className="absolute top-3 right-3 text-slate-500 hover:text-slate-800 text-2xl leading-none" aria-label="Close modal"&gt;&amp;times;&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;span className="text-sm font-bold text-emerald-700 uppercase"&gt;{selectedProduct.category}&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;h2 className="text-3xl font-bold text-slate-900 mt-1"&gt;{selectedProduct.name}&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;p className="text-md text-slate-500 mb-4"&gt;by {selectedProduct.brand}&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;div className="border-t border-slate-200 my-4"&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;h4 className="font-semibold text-slate-800 mb-2"&gt;Detailed Specs:&lt;/h4&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;p className="text-slate-700 leading-relaxed"&gt;{selectedProduct.specs}&lt;/p&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;div className="my-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&lt;button onClick={handleSummarizeGem} disabled={isSummarizing} className="w-full text-center bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300 disabled:bg-slate-400"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>{isSummarizing ? 'Thinking...' : '✨ Summarize Gem'}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>{gemSummary &amp;&amp; (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>&lt;div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg text-blue-800 text-sm"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                              </span>&lt;p&gt;{gemSummary}&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>)}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;a href={selectedProduct.url} target="_blank" rel="noopener noreferrer" className="inline-block w-full text-center bg-emerald-700 text-white font-bold py-3 px-6 rounded-lg hover:bg-emerald-800 transition-colors duration-300"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>Go to Gem</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>};</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">          </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const SuggestionModal = () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>if(!isSuggestionModalOpen) return null;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>return (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50" onClick={() =&gt; setSuggestionModalOpen(false)}&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div className="bg-white rounded-lg shadow-2xl p-6 w-full max-w-xl relative animate-fade-in" onClick={(e) =&gt; e.stopPropagation()}&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h2 className="text-2xl font-bold text-slate-900 mb-4"&gt;✨ Let me suggest a Gem for you!&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;p className="text-slate-600 mb-4"&gt;Describe a problem you're trying to solve or a task you need to accomplish. I'll recommend the best Gem for the job.&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;form onSubmit={handleSuggestGem}&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;textarea</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>value={suggestionQuery}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>onChange={(e) =&gt; setSuggestionQuery(e.target.value)}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>placeholder="e.g., 'I need to create wireframes for a new mobile app' or 'I want to run a usability audit on my prototype...'"</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>className="w-full h-32 p-2 border border-slate-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 transition mb-4"</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>disabled={isSuggesting}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>/&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div className="flex justify-end space-x-3"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button type="button" onClick={() =&gt; setSuggestionModalOpen(false)} className="px-4 py-2 bg-slate-200 text-slate-800 rounded-md hover:bg-slate-300"&gt;Cancel&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button type="submit" disabled={isSuggesting || !suggestionQuery.trim()} className="px-4 py-2 bg-emerald-700 text-white rounded-md hover:bg-emerald-800 disabled:bg-slate-400"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>{isSuggesting ? 'Thinking...' : 'Get Suggestion'}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/form&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>)</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>return (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div className="font-sans text-slate-800"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;header className="bg-white shadow-sm sticky top-0 z-10"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;h1 className="text-3xl font-bold text-slate-900 py-4"&gt;Gem explorer.&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;button onClick={() =&gt; setSuggestionModalOpen(true)} className="bg-emerald-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-emerald-800 transition-colors text-sm"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>✨ Suggest a Gem for Me</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/header&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;main className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div className="flex flex-col lg:flex-row lg:space-x-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;div className="lg:w-1/3 mb-8 lg:mb-0"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                     </span>&lt;div className="bg-white rounded-lg shadow-sm p-4 h-full flex flex-col" style={{maxHeight: 'calc(100vh - 120px)'}}&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h2 className="text-xl font-bold mb-4 border-b border-slate-200 pb-2 flex-shrink-0"&gt;AI Filter Assistant&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="flex-grow overflow-y-auto pr-2 mb-4 custom-scrollbar"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>{chatHistory.map((msg, index) =&gt; (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div key={index} className={`mb-3 p-3 rounded-lg max-w-xs text-sm ${ msg.role === 'user' ? 'bg-emerald-100 ml-auto text-emerald-900' : 'bg-slate-200 mr-auto text-slate-800' }`}&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;p&gt;{msg.parts[0].text}&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>))}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div ref={chatEndRef} /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;form onSubmit={handleAISearch} className="flex items-center space-x-2 flex-shrink-0"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;input type="text" value={userInput} onChange={(e) =&gt; setUserInput(e.target.value)} placeholder={isLoading ? "Thinking..." : "Ask to find Gems..."} className="w-full border-slate-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500 transition" disabled={isLoading} /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;button type="submit" disabled={isLoading || !userInput.trim()} className="bg-emerald-700 text-white px-4 py-2 rounded-md font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:bg-emerald-800 transition-colors"&gt;Send&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/form&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                     </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;div className="lg:w-2/3"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div className="flex flex-wrap gap-2 mb-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>{categories.map(category =&gt; (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;button key={category} onClick={() =&gt; handleCategoryFilter(category)} className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${ activeCategory === category ? 'bg-emerald-700 text-white shadow' : 'bg-white text-slate-700 hover:bg-slate-200 hover:shadow-sm' }`}&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>{category}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>))}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>{filteredProducts.length &gt; 0 ? (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>filteredProducts.map(product =&gt; &lt;ProductCard key={product.id} product={product} /&gt;)</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>) : (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="sm:col-span-2 xl:col-span-3 text-center py-12 bg-white rounded-lg shadow-sm"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;h3 className="text-xl font-semibold text-slate-700"&gt;No Gems Found&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;p className="text-slate-500 mt-2"&gt;Try a different AI query or select another category.&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>)}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/main&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">              </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;QuickViewModal /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;SuggestionModal /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const container = document.getElementById('root');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const root = ReactDOM.createRoot(container);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>root.render(&lt;App /&gt;);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
+<body class="bg-slate-100">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    // --- DATA STRUCTURE (As specified in the prompt) ---
+    const PRODUCTS = [
+      { id: 1, name: 'Evaluation and Improvement Bot', category: 'Design Analysis', description: 'Converts prototypes into improvement plans with Figma Make prompts', brand: 'Gemini', specs: 'This interactive assistant streamlines your design review by converting prototype videos or screenshots into a direct improvement plan with clear descriptions, severity ratings, and Figma Make prompts', url: 'https://gemini.google.com/gem/1jYmfsrkjVz9XpjUsQazOBGvm6p-DpT79?usp=sharing' },
+      { id: 2, name: 'Heuristic Analysis Bot', category: 'Design Analysis', description: 'Generates a comprehensive heuristic evaluation', brand: 'Gemini', specs: 'This bot generates a comprehensive heuristic evaluation by transforming a prototype video into a rigorous, actionable usability audit based on Nielsen\'s principles', url: 'https://gemini.google.com/gem/1lgF3FT1pcVeRjrb_H9TDq6uLgGVUa3T2?usp=sharing' },
+      { id: 3, name: 'Insight Collection Space', category: 'Research & Strategy', description: 'Organizes and analyzes research, creating categories and reports', brand: 'Gemini', specs: 'This chatbot helps you organize and analyze your research by guiding you through predefined steps to identify categories, create collections, and generate research findings reports', url: 'https://gemini.google.com/gem/1JQ0ltBsP13oe__uBJJfOVm9V3wWZD4Ni?usp=sharing' },
+      { id: 4, name: 'Research Assistant', category: 'Research & Strategy', description: 'Streamlines research workflow and provides recommendations or deliverables', brand: 'Gemini', specs: 'This chatbot streamlines your research workflow by assisting with 14 essential research activities and providing intelligent recommendations or a professional-grade deliverable', url: 'https://www.google.com/search?q=https://gemini.google.com/gem/1Ldq4Y6oM_UN51cKCRGWKzIPvhnTPsDMu%3Fusp%3Dsharing' },
+      { id: 5, name: 'The Dynamic Q&A Bot', category: 'Design Generation', description: 'Gathers specific information using concise, dynamic questions', brand: 'Gemini', specs: 'This chatbot uses a fixed set of concise, dynamically determined, short or multiple-choice questions to gather specific information while minimizing user effort', url: 'https://gemini.google.com/gem/1rL-C7pQklAHdDw_O8F8bz1Wvc7FGQ3OF?usp=sharing' },
+      { id: 6, name: 'The Wireframe Writer', category: 'Design Generation', description: 'Transforms project briefs into detailed, Figma-ready wireframes', brand: 'Gemini', specs: 'This specialized assistant guides you through a structured and collaborative design process to transform your project brief into a detailed, Figma-ready wireframe', url: 'https://gemini.google.com/gem/1nPo8mI8T1tZfTlCl9W0VV4hxPchebYDT?usp=sharing' }
+    ];
+
+    // --- MAIN APPLICATION COMPONENT ---
+    function App() {
+      // Product and filter state
+      const [filteredProducts, setFilteredProducts] = React.useState(PRODUCTS);
+      const [activeCategory, setActiveCategory] = React.useState('All');
+
+      // Modal state
+      const [isModalOpen, setIsModalOpen] = React.useState(false);
+      const [selectedProduct, setSelectedProduct] = React.useState(null);
+      const [isSuggestionModalOpen, setIsSuggestionModalOpen] = React.useState(false);
+
+      // AI and Chat state
+      const [chatHistory, setChatHistory] = React.useState([
+        { role: 'model', parts: [{ text: "Hi! How can I help you find the perfect Gem? Try asking for 'bots that help with usability audits'." }] }
+      ]);
+      const [userInput, setUserInput] = React.useState('');
+      const [isLoading, setIsLoading] = React.useState(false);
+      const [summary, setSummary] = React.useState('');
+      const [suggestion, setSuggestion] = React.useState(null);
+      const [suggestionInput, setSuggestionInput] = React.useState('');
+
+      // Derive unique categories from the product data for the filter buttons
+      const categories = ['All', ...new Set(PRODUCTS.map(p => p.category))];
+      
+      const API_ENDPOINT = '/api/gemini';
+
+      // --- HANDLER FUNCTIONS ---
+
+      const handleCategoryFilter = (category) => {
+        setActiveCategory(category);
+        if (category === 'All') {
+          setFilteredProducts(PRODUCTS);
+        } else {
+          setFilteredProducts(PRODUCTS.filter(product => product.category === category));
+        }
+      };
+
+      const openModal = (product) => {
+        setSelectedProduct(product);
+        setIsModalOpen(true);
+        setSummary(''); // Clear previous summary
+      };
+
+      const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedProduct(null);
+      };
+
+      const openSuggestionModal = () => setIsSuggestionModalOpen(true);
+      const closeSuggestionModal = () => {
+          setIsSuggestionModalOpen(false);
+          setSuggestion(null);
+          setSuggestionInput('');
+      };
+
+      // --- AI FUNCTIONALITY ---
+
+      const handleAISearch = async (e) => {
+        e.preventDefault();
+        if (!userInput.trim() || isLoading) return;
+
+        setIsLoading(true);
+        const userMessage = userInput;
+        const newChatHistory = [...chatHistory, { role: 'user', parts: [{ text: userMessage }] }];
+        setChatHistory(newChatHistory);
+        setUserInput('');
+
+        try {
+          const response = await fetch(API_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'filter', payload: { chatHistory: newChatHistory, userMessage } }),
+          });
+          if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+
+          const { aiResponseObject, modelChatMessage } = await response.json();
+          const { category, keywords } = aiResponseObject;
+
+          setChatHistory(prev => [...prev, { role: 'model', parts: [{ text: modelChatMessage }] }]);
+
+          const lowercasedKeywords = keywords.map(k => k.toLowerCase());
+          const results = PRODUCTS.filter(product => {
+            const categoryMatch = product.category.toLowerCase() === category.toLowerCase();
+            const textToSearch = `${product.name} ${product.description} ${product.brand} ${product.specs}`.toLowerCase();
+            const keywordMatch = lowercasedKeywords.length > 0 && lowercasedKeywords.some(keyword => textToSearch.includes(keyword));
+            return categoryMatch || keywordMatch;
+          });
+
+          setFilteredProducts(results);
+          setActiveCategory(null);
+
+        } catch (error) {
+          console.error("AI search failed:", error);
+          const errorMessage = "I'm sorry, I'm having trouble connecting. Please try again in a moment.";
+          setChatHistory(prev => [...prev, { role: 'model', parts: [{ text: errorMessage }] }]);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      const handleSummarize = async () => {
+        if (!selectedProduct || isLoading) return;
+        setIsLoading(true);
+        setSummary('');
+
+        try {
+            const response = await fetch(API_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'summarize', payload: { product: selectedProduct } }),
+            });
+            if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+            const { summary } = await response.json();
+            setSummary(summary);
+        } catch (error) {
+            console.error("Summarize failed:", error);
+            setSummary("Sorry, I couldn't generate a summary right now.");
+        } finally {
+            setIsLoading(false);
+        }
+      };
+      
+      const handleSuggest = async (e) => {
+        e.preventDefault();
+        if (!suggestionInput.trim() || isLoading) return;
+        setIsLoading(true);
+        setSuggestion(null);
+
+        try {
+            const response = await fetch(API_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'suggest', payload: { userInput: suggestionInput } }),
+            });
+            if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+            const { recommendedProduct } = await response.json();
+            setSuggestion(recommendedProduct);
+        } catch (error) {
+            console.error("Suggestion failed:", error);
+            setSuggestion({ error: "Sorry, I couldn't find a suggestion. Please try a different query." });
+        } finally {
+            setIsLoading(false);
+        }
+      };
+
+      // --- UI COMPONENTS ---
+      const ProductCard = ({ product }) => (
+        <div
+          onClick={() => openModal(product)}
+          className="bg-white rounded-lg p-4 flex flex-col justify-between cursor-pointer shadow-sm hover:shadow-md transition-shadow duration-300 h-[200px]"
+        >
+          <div>
+            <span className="text-xs font-semibold text-emerald-700 uppercase">{product.category}</span>
+            <h3 className="text-lg font-bold text-slate-800 mt-1">{product.name}</h3>
+          </div>
+          <p className="text-slate-600 text-sm leading-snug">{product.description}</p>
+        </div>
+      );
+
+      const QuickViewModal = () => {
+        if (!isModalOpen || !selectedProduct) return null;
+
+        return (
+          <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 animate-fade-in" onClick={closeModal}>
+            <div className="bg-white rounded-lg shadow-2xl p-6 w-full max-w-2xl relative" onClick={(e) => e.stopPropagation()}>
+              <button onClick={closeModal} className="absolute top-3 right-3 text-slate-500 hover:text-slate-800 text-2xl" aria-label="Close modal">&times;</button>
+              <span className="text-sm font-bold text-emerald-700 uppercase">{selectedProduct.category}</span>
+              <h2 className="text-3xl font-bold text-slate-900 mt-1">{selectedProduct.name}</h2>
+              <p className="text-md text-slate-500 mb-4">by {selectedProduct.brand}</p>
+              <div className="border-t border-slate-200 my-4"></div>
+              <h4 className="font-semibold text-slate-800 mb-2">Detailed Specs:</h4>
+              <p className="text-slate-700 leading-relaxed mb-4">{selectedProduct.specs}</p>
+
+              {/* AI Summary Section */}
+              <div className="bg-slate-100 p-4 rounded-lg">
+                  <button onClick={handleSummarize} disabled={isLoading} className="flex items-center justify-center w-full font-bold text-emerald-800 disabled:opacity-50 disabled:cursor-wait">
+                      <span className="text-xl mr-2">✨</span> Summarize Gem
+                  </button>
+                  {isLoading && summary === '' && <p className="text-center text-slate-500 mt-2">Generating summary...</p>}
+                  {summary && <p className="text-slate-800 mt-3 text-center italic">"{summary}"</p>}
+              </div>
+
+              <div className="border-t border-slate-200 my-4"></div>
+              <a href={selectedProduct.url} target="_blank" rel="noopener noreferrer" className="inline-block w-full text-center bg-emerald-700 text-white font-bold py-3 px-6 rounded-lg hover:bg-emerald-800 transition-colors duration-300">Go to Gem</a>
+            </div>
+          </div>
+        );
+      };
+      
+      const SuggestionModal = () => {
+          if (!isSuggestionModalOpen) return null;
+
+          return (
+            <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 animate-fade-in" onClick={closeSuggestionModal}>
+              <div className="bg-white rounded-lg shadow-2xl p-6 w-full max-w-2xl relative" onClick={(e) => e.stopPropagation()}>
+                <button onClick={closeSuggestionModal} className="absolute top-3 right-3 text-slate-500 hover:text-slate-800 text-2xl" aria-label="Close modal">&times;</button>
+                <h2 className="text-2xl font-bold text-slate-900 mb-2">Find the Best Gem for Your Task</h2>
+                <p className="text-slate-600 mb-4">Describe what you need to do, and our AI will recommend the perfect Gem.</p>
+                <form onSubmit={handleSuggest}>
+                  <textarea
+                    value={suggestionInput}
+                    onChange={(e) => setSuggestionInput(e.target.value)}
+                    placeholder="e.g., 'I need to create a detailed wireframe from a project brief' or 'Help me organize my user research notes'"
+                    className="w-full h-24 p-2 border border-slate-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500"
+                    disabled={isLoading}
+                  />
+                  <button type="submit" disabled={isLoading || !suggestionInput.trim()} className="mt-2 w-full bg-emerald-700 text-white font-bold py-2 px-4 rounded-md disabled:bg-slate-400 hover:bg-emerald-800 transition-colors">
+                    {isLoading ? "Thinking..." : "✨ Suggest a Gem"}
+                  </button>
+                </form>
+                {suggestion && (
+                  <div className="mt-4 border-t pt-4">
+                    {suggestion.error ? (
+                        <p className="text-red-600">{suggestion.error}</p>
+                    ) : (
+                        <div>
+                            <h3 className="font-bold text-lg">We recommend:</h3>
+                            <div className="mt-2 bg-emerald-50 border border-emerald-200 p-4 rounded-lg cursor-pointer hover:bg-emerald-100" onClick={() => { openModal(suggestion); closeSuggestionModal(); }}>
+                                <h4 className="font-bold text-emerald-800">{suggestion.name}</h4>
+                                <p className="text-sm text-slate-700">{suggestion.description}</p>
+                            </div>
+                        </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+      };
+
+      // --- RENDER ---
+      return (
+        <div className="bg-slate-100 min-h-screen font-sans text-slate-800">
+          <header className="bg-white shadow-md sticky top-0 z-10">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+              <h1 className="text-3xl font-bold text-slate-900 py-4">Gem explorer.</h1>
+              <button onClick={openSuggestionModal} className="bg-emerald-100 text-emerald-800 font-bold py-2 px-4 rounded-full hover:bg-emerald-200 transition-colors text-sm">
+                ✨ Suggest a Gem for Me
+              </button>
+            </div>
+          </header>
+
+          <main className="max-w-7xl mx-auto p-4 lg:p-8">
+            <div className="flex flex-col lg:flex-row lg:space-x-8">
+              <div className="lg:w-1/3 mb-8 lg:mb-0">
+                <div className="bg-white rounded-lg shadow-sm p-4 h-full flex flex-col">
+                  <h2 className="text-xl font-bold mb-4 border-b pb-2">AI Filter Assistant</h2>
+                  <div className="flex-grow overflow-y-auto h-96 pr-2 mb-4 custom-scrollbar">
+                    {chatHistory.map((msg, index) => (
+                      <div key={index} className={`mb-3 p-3 rounded-lg max-w-xs ${msg.role === 'user' ? 'bg-emerald-100 ml-auto' : 'bg-slate-200 mr-auto'}`}>
+                        <p className="text-sm">{msg.parts[0].text}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <form onSubmit={handleAISearch} className="flex items-center space-x-2">
+                    <input
+                      type="text"
+                      value={userInput}
+                      onChange={(e) => setUserInput(e.target.value)}
+                      placeholder={isLoading ? "Thinking..." : "Ask to find Gems..."}
+                      className="w-full border-slate-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500"
+                      disabled={isLoading}
+                    />
+                    <button type="submit" disabled={isLoading || !userInput.trim()} className="bg-emerald-700 text-white px-4 py-2 rounded-md font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:bg-emerald-800 transition-colors">Send</button>
+                  </form>
+                </div>
+              </div>
+
+              <div className="lg:w-2/3">
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {categories.map(category => (
+                    <button
+                      key={category}
+                      onClick={() => handleCategoryFilter(category)}
+                      className={`px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200 ${activeCategory === category ? 'bg-emerald-700 text-white shadow' : 'bg-white text-slate-700 hover:bg-slate-200'}`}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                  {filteredProducts.length > 0 ? (
+                    filteredProducts.map(product => <ProductCard key={product.id} product={product} />)
+                  ) : (
+                    <div className="md:col-span-2 xl:col-span-3 text-center py-12 bg-white rounded-lg">
+                      <h3 className="text-xl font-semibold">No Gems Found</h3>
+                      <p className="text-slate-500 mt-2">Try a different AI query or select another category.</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </main>
+          <QuickViewModal />
+          <SuggestionModal />
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
 </body>
 </html>
+
